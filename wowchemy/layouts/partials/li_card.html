@@ -38,17 +38,29 @@
   {{ $anchor := $item.Params.image.focal_point | default "Smart" }}
   {{ with $resource }}
   {{ $image := .Fill (printf "808x455 %s" $anchor) }}
+  {{ if isset $item.Params "external_link" }}
+  <a href="{{ $item.Params.external_link }}">
+  {{ else }}
   <a href="{{ $item.RelPermalink }}">
+  {{ end }}
     <div class="img-hover-zoom"><img src="{{ $image.RelPermalink }}" class="article-banner" alt="{{ $item.Title }}" loading="lazy"></div>
   </a>
   {{end}}
 
   <div class="section-subheading article-title mb-1 mt-3">
+    {{ if isset $item.Params "external_link" }}
+    <a href="{{ $item.Params.external_link }}">{{ $item.Title }}</a>
+    {{ else }}
     <a href="{{ $item.RelPermalink }}">{{ $item.Title }}</a>
+    {{ end }}
   </div>
 
   {{ with $summary }}
+  {{ if isset $item.Params "external_link" }}
+  <a href="{{ $item.Params.external_link }}" class="summary-link">
+  {{ else }}
   <a href="{{ $item.RelPermalink }}" class="summary-link">
+  {{ end }}
     <div class="article-style">
       <p>{{.}}</p>
     </div>
